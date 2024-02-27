@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const uniqueValidator = require("mongoose-unique-validator");
+
 const Schema = mongoose.Schema;
 
 const sheepShema = new Schema({
@@ -12,4 +14,5 @@ const sheepShema = new Schema({
   owner: { type: mongoose.Types.ObjectId, ref: "User" },
 });
 
+userSchema.plugin(uniqueValidator);
 module.exports = mongoose.model("Sheep", sheepShema);
