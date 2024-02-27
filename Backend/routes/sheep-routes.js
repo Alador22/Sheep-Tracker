@@ -6,10 +6,10 @@ const router = express.Router();
 
 router.get("/", sheepControllers.getAllSheeps);
 
-router.post("/", sheepControllers.addSheep);
+router.post("/save", sheepControllers.addSheep);
 
-router.patch("/", sheepControllers.updateSheepInfo);
+router.patch("/update", sheepControllers.updateSheepInfo);
 
-router.delete("/", sheepControllers.removeSheep);
+router.delete("/delete", sheepControllers.removeSheep);
 
 module.exports = router;

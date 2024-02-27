@@ -11,6 +11,8 @@ app.get("/", (request, response) => {
   return response.status(234).send("server is running");
 });
 
+app.use("/sheeps", sheepsRoutes);
+
 mongoose
   .connect(
     `mongodb+srv://alador:9fElxTe3xTMdvSL7@cluster0.dxz66lm.mongodb.net/sheeptracker?retryWrites=true&w=majority`
