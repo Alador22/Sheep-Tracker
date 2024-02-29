@@ -4,11 +4,11 @@ const sheepControllers = require("../controllers/sheep-controllers");
 
 const router = express.Router();
 
-router.get("/", sheepControllers.getAllSheeps);
+router.get("/", sheepControllers.getSheeps);
 
 router.post("/save", sheepControllers.addSheep);
 
-router.patch("/update", sheepControllers.updateSheepInfo);
+router.patch("/update", sheepControllers.updateInfo);
 
 router.delete("/delete", sheepControllers.removeSheep);
 

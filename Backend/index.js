@@ -11,11 +11,8 @@ app.get("/", (request, response) => {
   return response.status(234).send("server is running");
 });
 
-<<<<<<< Updated upstream
 app.use("/sheeps", sheepsRoutes);
-=======
 app.use("/user", userRoutes);
->>>>>>> Stashed changes
 
 mongoose
   .connect(
