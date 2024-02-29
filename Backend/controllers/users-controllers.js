@@ -1,4 +1,5 @@
 const user = require("../models/user");
+
 const userInfo = (req, res, next) => {};
 
 const signUp = (req, res, next) => {
