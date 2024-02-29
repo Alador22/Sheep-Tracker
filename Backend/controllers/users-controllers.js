@@ -1,14 +1,15 @@
+const user = require("../models/user");
 const userInfo = (req, res, next) => {};
 
 const signUp = (req, res, next) => {
   const { email, password } = req.body;
 
-  const newUser = {
+  const newUser = new user({
     email,
     password,
-  };
+  });
 
-  newUser.save(newUser);
+  newUser.save();
 
   res.status(201).json({ user: newUser });
 };
