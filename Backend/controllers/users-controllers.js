@@ -1,6 +1,17 @@
 const userInfo = (req, res, next) => {};
 
-const signUp = (req, res, next) => {};
+const signUp = (req, res, next) => {
+  const { email, password } = req.body;
+
+  const newUser = {
+    email,
+    password,
+  };
+
+  newUser.save(newUser);
+
+  res.status(201).json({ user: newUser });
+};
 
 const logIn = (req, res, next) => {};
 

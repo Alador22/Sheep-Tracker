@@ -1,17 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyparser = require("body-parser");
+const bodyParser = require("body-parser");
 
 const sheepsRoutes = require("./routes/sheep-routes");
 const userRoutes = require("./routes/user-routes");
 
 const app = express();
+app.use(bodyParser.json());
 
 app.get("/", (request, response) => {
   return response.status(234).send("server is running");
 });
 
 app.use("/sheeps", sheepsRoutes);
+
 app.use("/user", userRoutes);
 
 mongoose
