@@ -4,15 +4,16 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const Schema = mongoose.Schema;
 
-const sheepShema = new Schema({
+const sheepSchema = new Schema({
   name: { type: String, required: true },
   birthYear: { type: Number },
   merkeNr: { type: String, required: true, unique: true },
+  klaveNr: { type: Number },
   dead: { type: Date },
   father: { type: mongoose.Types.ObjectId, ref: "Sheep" },
   mother: { type: mongoose.Types.ObjectId, ref: "Sheep" },
   owner: { type: mongoose.Types.ObjectId, ref: "User" },
 });
 
-userSchema.plugin(uniqueValidator);
-module.exports = mongoose.model("Sheep", sheepShema);
+sheepSchema.plugin(uniqueValidator);
+module.exports = mongoose.model("Sheep", sheepSchema);
