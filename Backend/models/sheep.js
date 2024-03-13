@@ -12,7 +12,7 @@ const sheepSchema = new Schema({
   dead: { type: Date },
   father: { type: mongoose.Types.ObjectId, ref: "Sheep" },
   mother: { type: mongoose.Types.ObjectId, ref: "Sheep" },
-  owner: { type: mongoose.Types.ObjectId, ref: "User" },
+  owner_id: { type: mongoose.Types.ObjectId, ref: "User" },
 });
 
 sheepSchema.plugin(uniqueValidator);

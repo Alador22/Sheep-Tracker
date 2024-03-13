@@ -9,6 +9,7 @@ const userSchema = new Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true, minLength: 6 },
+  sheeps: [{ type: mongoose.Types.ObjectId, ref: "Sheep" }],
 });
 
 userSchema.plugin(uniqueValidator);

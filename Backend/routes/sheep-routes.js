@@ -7,10 +7,14 @@ const router = express.Router();
 
 router.get("/", sheepControllers.getSheeps);
 
+router.get("/:sheepId", sheepControllers.getSheepById);
+
+router.get("/user/:userId", sheepControllers.getSheepByUserId); //not sure here
+
 router.post("/save", sheepControllers.addSheep);
 
-router.patch("/update", sheepControllers.updateInfo);
+router.patch("/:sheepId", sheepControllers.updateInfo);
 
-router.delete("/delete", sheepControllers.removeSheep);
+router.delete("/:sheepId", sheepControllers.removeSheep);
 
 module.exports = router;
