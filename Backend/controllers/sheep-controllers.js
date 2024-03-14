@@ -1,4 +1,5 @@
 const Sheep = require("../models/sheep");
+const User = require("../models/user");
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
 
@@ -38,6 +39,7 @@ const getSheepById = async (req, res, next) => {
 };
 
 const getSheepByUserId = async (req, res, next) => {
+  //might delete**
   //not sure how this will work. if it needs its own page or be in the user profile page
   const sheepId = req.params.userId;
 };
@@ -98,7 +100,14 @@ const removeSheep = async (req, res, next) => {
 
   const sheepId = req.params.sheepId;
 
-  let removeSheep = await Sheep.findOne({ _id: sheepId });
+  let removeSheep;
+
+  try {
+    removeSheep = await Sheep.findOne({ _id: sheepId });
+  } catch (err) {
+    const error = new HttpError("kunne ikke finne sauen, prøve igjen.", 500);
+    return next(error);
+  }
 
   if (!removeSheep) {
     const error = new HttpError(

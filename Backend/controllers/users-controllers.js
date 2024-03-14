@@ -1,9 +1,24 @@
-const user = require("../models/user");
+const User = require("../models/user");
 const HttpError = require("../models/http-error");
 
 const { validationResult } = require("express-validator");
 
-const userInfo = (req, res, next) => {};
+const userInfo = async (req, res, next) => {
+  const userId = req.params.userId;
+
+  let user;
+  try {
+    user = await User.findById((_id = userId));
+  } catch (err) {
+    const error = new HttpError("Noe gikk galt, prøve igjen senere.", 500);
+    return next(error);
+  }
+  if (!user) {
+    const error = new HttpError("bruker finnes ikke i databasen.", 404);
+    return next(error);
+  }
+  res.json({ user });
+};
 
 const signUp = async (req, res, next) => {
   const errors = validationResult(req);
@@ -14,7 +29,7 @@ const signUp = async (req, res, next) => {
 
   let checkExistingUser;
   try {
-    checkExistingUser = await user.findOne({ email: email });
+    checkExistingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError(
       "kunne ikke lage konto, prøve igjen senere.",
@@ -31,7 +46,7 @@ const signUp = async (req, res, next) => {
     return next(error);
   }
 
-  const newUser = new user({
+  const newUser = new User({
     firstName,
     lastName,
     email,
@@ -45,7 +60,7 @@ const signUp = async (req, res, next) => {
     const error = new HttpError("kunne ikke lage konto, prøve igjen.", 500);
     return next(error);
   }
-  res.status(201).json({ user: newUser.toObject({ getters: true }) });
+  res.status(201).json({ User: newUser.toObject({ getters: true }) });
 };
 
 const logIn = async (req, res, next) => {
@@ -57,7 +72,7 @@ const logIn = async (req, res, next) => {
 
   let checkExistingUser;
   try {
-    checkExistingUser = await user.findOne({ email: email });
+    checkExistingUser = await User.findOne({ email: email });
   } catch (err) {
     const error = new HttpError(
       "kunne ikke logge inn, prøve igjen senere.",
