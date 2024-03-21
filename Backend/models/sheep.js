@@ -10,8 +10,8 @@ const sheepSchema = new Schema({
   merkeNr: { type: String, required: true, unique: true },
   klaveNr: { type: Number },
   dead: { type: Date },
-  father: { type: mongoose.Types.ObjectId, ref: "Sheep" },
-  mother: { type: mongoose.Types.ObjectId, ref: "Sheep" },
+  father: { type: String, ref: "Sheep" },
+  mother: { type: String, ref: "Sheep" },
   owner_id: { type: mongoose.Types.ObjectId, ref: "User" },
 });
 

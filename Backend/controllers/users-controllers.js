@@ -51,7 +51,6 @@ const signUp = async (req, res, next) => {
     lastName,
     email,
     password,
-    sheeps: [],
   });
 
   try {

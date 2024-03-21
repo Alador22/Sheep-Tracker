@@ -9,11 +9,17 @@ router.get("/", sheepControllers.getSheeps);
 
 router.get("/:sheepId", sheepControllers.getSheepById);
 
-router.get("/user/:userId", sheepControllers.getSheepByUserId); //not sure here
+router.post(
+  "/save",
+  [check("name").trim().notEmpty(), check("merkeNr").trim().notEmpty()],
+  sheepControllers.addSheep
+);
 
-router.post("/save", sheepControllers.addSheep);
-
-router.patch("/:sheepId", sheepControllers.updateInfo);
+router.patch(
+  "/:sheepId",
+  [check("name").trim().notEmpty()],
+  sheepControllers.updateInfo
+);
 
 router.delete("/:sheepId", sheepControllers.removeSheep);
 
