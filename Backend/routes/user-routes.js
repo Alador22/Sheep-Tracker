@@ -27,8 +27,15 @@ router.post(
   userControllers.logIn
 );
 
-router.patch("/update", userControllers.updatePassword);
+router.patch(
+  "/:userId",
+  [
+    check("oldPassword").trim().isLength({ min: 6 }),
+    check("newPassword").trim().isLength({ min: 6 }),
+  ],
+  userControllers.updatePassword
+);
 
-router.delete("/remove", userControllers.removeAccount);
+router.delete("/:userId", userControllers.removeAccount);
 
 module.exports = router;

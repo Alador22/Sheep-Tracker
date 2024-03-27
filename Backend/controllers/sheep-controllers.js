@@ -203,6 +203,7 @@ const removeSheep = async (req, res, next) => {
   }
   res.status(200).json("Sauen er fjernet!");
 };
+
 exports.getSheeps = getSheeps;
 exports.getSheepById = getSheepById;
 exports.addSheep = addSheep;
