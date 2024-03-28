@@ -21,11 +21,11 @@ function Login() {
 
       console.log('Login successful:', response.data);
       // Handle successful login here
-      // e.g., navigate to a new page, store the login token, etc.
+      
     } catch (error) {
       console.error('Login failed:', error.response ? error.response.data.message : error.message);
       // Handle login failure here
-      // e.g., show an error message to the user
+      
     }
   };
 
@@ -47,7 +47,7 @@ function Login() {
           onChange={handleInputChange}
         />
         <button onClick={handleLogin}>Logg inn</button>
-        {/* Link this button to your user registration function or page */}
+        {}
         <button>Lag bruker</button>
       </div>
     </div>
@@ -56,4 +56,4 @@ function Login() {
 
 export default Login;
 
-// test1@test.com    ,   123456
+
