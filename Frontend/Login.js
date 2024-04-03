@@ -1,9 +1,8 @@
-import './Login.css';
+import './login.css';
 import React, { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 
 function Login() {
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,32 +16,44 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:5000/user/login', {
         email,
-        password
+        password,
       });
 
       console.log('Login successful:', response.data);
-      // Handle successful login here 
-
+      // Handle successful login here
+      
     } catch (error) {
       console.error('Login failed:', error.response ? error.response.data.message : error.message);
-      console.log(error.response ? error.response.data.message : error.message)
-      // Handle login failure here 
+      // Handle login failure here
+      
     }
   };
-  return (
 
+  return (
     <div className="Main">
       <div className="Login">
-
-      <input type="text" placeholder="Email"></input>
-      <input type="password" placeholder="Passord"></input>
-      <button>Logg inn</button>
-    
-      <button>Lag bruker</button>
-        
+        <input
+          type="text"
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={handleInputChange}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Passord"
+          value={password}
+          onChange={handleInputChange}
+        />
+        <button onClick={handleLogin}>Logg inn</button>
+        {}
+        <button>Lag bruker</button>
       </div>
     </div>
   );
 }
 
 export default Login;
+
+
