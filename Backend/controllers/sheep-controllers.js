@@ -2,11 +2,13 @@ const Sheep = require("../models/sheep");
 const User = require("../models/user");
 const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose");
 
 const getSheeps = async (req, res, next) => {
+  const ownerId = req.userData.userId;
   let sheeps;
   try {
-    sheeps = await Sheep.find();
+    sheeps = await Sheep.find({ owner_id: ownerId });
   } catch (err) {
     const error = new HttpError("Noe gikk galt, prøve igjen senere.", 500);
     return next(error);
@@ -20,10 +22,14 @@ const getSheeps = async (req, res, next) => {
 
 const getSheepById = async (req, res, next) => {
   const sheepId = req.params.sheepId;
+  const ownerId = req.userData.userId;
 
   let sheep;
   try {
-    sheep = await Sheep.findById(sheepId);
+    sheep = await Sheep.findOne().and([
+      { _id: sheepId },
+      { owner_id: ownerId },
+    ]);
   } catch (err) {
     const error = new HttpError("Noe gikk galt, prøve igjen senere.", 500);
     return next(error);
@@ -43,12 +49,15 @@ const addSheep = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
+  const ownerId = req.userData.userId;
+  const { name, birthdate, merkeNr, klaveNr, dead, father, mother } = req.body;
 
-  const { name, birthYear, merkeNr, klaveNr, dead, father, mother, owner_id } =
-    req.body;
+  let dupeChecker = await Sheep.findOne().and([
+    { merkeNr: merkeNr },
+    { owner_id: ownerId },
+  ]);
 
-  let duplicateChecker = await Sheep.findOne({ merkeNr: merkeNr });
-  if (duplicateChecker) {
+  if (dupeChecker) {
     const error = new HttpError(
       "En sau med samme merke nummer finnes allerede, prøv igjen med et annet merke nummer.",
       409
@@ -58,7 +67,10 @@ const addSheep = async (req, res, next) => {
 
   let fatherSheep;
   if (father) {
-    fatherSheep = await Sheep.findOne({ merkeNr: father });
+    fatherSheep = await Sheep.findOne().and([
+      { merkeNr: father },
+      { owner_id: ownerId },
+    ]);
     if (!fatherSheep) {
       return next(
         new HttpError("Kunne ikke finne faren med angitt merkeNr.", 404)
@@ -67,7 +79,10 @@ const addSheep = async (req, res, next) => {
   }
   let motherSheep;
   if (mother) {
-    motherSheep = await Sheep.findOne({ merkeNr: mother });
+    motherSheep = await Sheep.findOne().and([
+      { merkeNr: mother },
+      { owner_id: ownerId },
+    ]);
     if (!motherSheep) {
       return next(
         new HttpError("Kunne ikke finne moren med angitt merkeNr.", 404)
@@ -75,15 +90,24 @@ const addSheep = async (req, res, next) => {
     }
   }
 
+  if (mother && father && mother === father) {
+    return next(
+      new HttpError(
+        "Ugyldige inndata, kan ikke bruke samme merkeNr på far og mor.",
+        422
+      )
+    );
+  }
+
   const newSheep = new Sheep({
     name,
-    birthYear,
+    birthdate,
     merkeNr,
     klaveNr,
     dead,
     father,
     mother,
-    owner_id,
+    owner_id: ownerId,
   });
 
   try {
@@ -102,12 +126,15 @@ const updateInfo = async (req, res, next) => {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
   const sheepId = req.params.sheepId;
-
-  const { name, birthYear, klaveNr, dead, father, mother } = req.body;
+  const ownerId = req.userData.userId;
+  const { name, birthdate, klaveNr, dead, father, mother } = req.body;
 
   let sheep;
   try {
-    sheep = await Sheep.findOne({ _id: sheepId });
+    sheep = await Sheep.findOne().and([
+      { _id: sheepId },
+      { owner_id: ownerId },
+    ]);
   } catch (err) {
     const error = new HttpError("kunne ikke finne sauen, prøve igjen.", 500);
     return next(error);
@@ -121,7 +148,10 @@ const updateInfo = async (req, res, next) => {
   }
   let fatherSheep;
   if (father) {
-    fatherSheep = await Sheep.findOne({ merkeNr: father });
+    fatherSheep = await Sheep.findOne().and([
+      { merkeNr: father },
+      { owner_id: ownerId },
+    ]);
     if (!fatherSheep) {
       return next(
         new HttpError("Kunne ikke finne faren med angitt merkeNr.", 404)
@@ -130,7 +160,10 @@ const updateInfo = async (req, res, next) => {
   }
   let motherSheep;
   if (mother) {
-    motherSheep = await Sheep.findOne({ merkeNr: mother });
+    motherSheep = await Sheep.findOne().and([
+      { merkeNr: mother },
+      { owner_id: ownerId },
+    ]);
     if (!motherSheep) {
       return next(
         new HttpError("Kunne ikke finne moren med angitt merkeNr.", 404)
@@ -138,7 +171,7 @@ const updateInfo = async (req, res, next) => {
     }
   }
 
-  if (mother === father) {
+  if (mother && father && mother === father) {
     return next(
       new HttpError(
         "Ugyldige inndata, kan ikke bruke samme merkeNr på far og mor.",
@@ -148,11 +181,16 @@ const updateInfo = async (req, res, next) => {
   }
 
   if (father === sheep.merkeNr || mother === sheep.merkeNr) {
-    return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
+    return next(
+      new HttpError(
+        "Ugyldige inndata, sauen kan ikke bruke merkeNr som far eller mor .",
+        422
+      )
+    );
   }
 
   sheep.name = name;
-  sheep.birthYear = birthYear;
+  sheep.birthdate = birthdate;
   sheep.klaveNr = klaveNr;
   sheep.dead = dead;
   sheep.father = father;
@@ -172,12 +210,15 @@ const removeSheep = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
-
+  const ownerId = req.userData.userId;
   const sheepId = req.params.sheepId;
 
   let sheep;
   try {
-    sheep = await Sheep.findById(sheepId);
+    sheep = await Sheep.findOne().and([
+      { _id: sheepId },
+      { owner_id: ownerId },
+    ]);
   } catch (err) {
     const error = new HttpError("kunne ikke finne sauen, prøve igjen :) ", 500);
     return next(error);
@@ -194,9 +235,20 @@ const removeSheep = async (req, res, next) => {
   const merkeNr = sheep.merkeNr;
 
   try {
-    await Sheep.deleteOne({ _id: sheepId });
-    await Sheep.updateMany({ father: merkeNr }, { $unset: { father: "" } });
-    await Sheep.updateMany({ mother: merkeNr }, { $unset: { mother: "" } });
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    sheep = await Sheep.deleteOne({ _id: sheepId });
+    await Sheep.updateMany(
+      { father: merkeNr, owner_id: ownerId },
+      { $unset: { father: "" } },
+      { session: session }
+    );
+    await Sheep.updateMany(
+      { mother: merkeNr, owner_id: ownerId },
+      { $unset: { mother: "" } },
+      { session: session }
+    );
+    await session.commitTransaction();
   } catch (err) {
     const error = new HttpError("Noe gikk galt, prøve igjen senere.", 500);
     return next(error);

@@ -1,5 +1,8 @@
 const User = require("../models/user");
+const Sheep = require("../models/sheep");
 const HttpError = require("../models/http-error");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
 
 const { validationResult } = require("express-validator");
 
@@ -59,7 +62,27 @@ const signUp = async (req, res, next) => {
     const error = new HttpError("kunne ikke lage konto, prøve igjen.", 500);
     return next(error);
   }
-  res.status(201).json({ User: newUser.toObject({ getters: true }) });
+
+  let token;
+  try {
+    token = jwt.sign(
+      {
+        userId: newUser.id,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        email: newUser.email,
+      },
+      "shaun_the_sheep",
+      {
+        expiresIn: "5h",
+      }
+    );
+  } catch (err) {
+    const error = new HttpError("kunne ikke lage konto, prøve igjen.", 500);
+    return next(error);
+  }
+
+  res.status(201).json({ token: token });
 };
 
 const logIn = async (req, res, next) => {
@@ -88,7 +111,26 @@ const logIn = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Logged in!" });
+  let token;
+  try {
+    token = jwt.sign(
+      {
+        userId: checkExistingUser.id,
+        firstName: checkExistingUser.firstName,
+        lastName: checkExistingUser.lastName,
+        email: checkExistingUser.email,
+      },
+      "shaun_the_sheep",
+      {
+        expiresIn: "5h",
+      }
+    );
+  } catch (err) {
+    const error = new HttpError("kunne ikke lage konto, prøve igjen!.", 500);
+    return next(error);
+  }
+
+  res.status(201).json({ token: token });
 };
 
 const updatePassword = async (req, res, next) => {
@@ -97,7 +139,7 @@ const updatePassword = async (req, res, next) => {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
   const { oldPassword, newPassword } = req.body;
-  const userId = req.params.userId;
+  const userId = req.userData.userId;
 
   let user;
   try {
@@ -147,8 +189,7 @@ const removeAccount = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
-
-  const userId = req.params.userId;
+  const userId = req.userData.userId;
 
   let removeAccount;
   try {
@@ -167,7 +208,11 @@ const removeAccount = async (req, res, next) => {
   }
 
   try {
+    const session = await mongoose.startSession();
+    session.startTransaction();
     removeAccount = await User.deleteOne({ _id: userId });
+    await Sheep.deleteMany({ owner_id: userId });
+    await session.commitTransaction();
   } catch (err) {
     const error = new HttpError("Noe gikk galt, prøve igjen senere.", 500);
     return next(error);

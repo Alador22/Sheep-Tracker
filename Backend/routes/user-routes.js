@@ -1,6 +1,6 @@
 const express = require("express");
 const { check } = require("express-validator");
-
+const checkToken = require("../middleware/check-auth");
 const userControllers = require("../controllers/users-controllers");
 
 const router = express.Router();
@@ -27,8 +27,10 @@ router.post(
   userControllers.logIn
 );
 
+router.use(checkToken);
+
 router.patch(
-  "/:userId",
+  "/profile",
   [
     check("oldPassword").trim().isLength({ min: 6 }),
     check("newPassword").trim().isLength({ min: 6 }),
@@ -36,6 +38,6 @@ router.patch(
   userControllers.updatePassword
 );
 
-router.delete("/:userId", userControllers.removeAccount);
+router.delete("/profile", userControllers.removeAccount);
 
 module.exports = router;
