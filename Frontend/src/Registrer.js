@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './Registrer.css'; // Make sure to create a corresponding CSS file for styling
+import './Registrer.css'; 
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -47,7 +47,7 @@ function Register() {
         <input
           type="date"
           name="birthdate"
-          placeholder="Birthdate"
+          placeholder="birthdate"
           value={formData.birthdate}
           onChange={handleChange}
         />
