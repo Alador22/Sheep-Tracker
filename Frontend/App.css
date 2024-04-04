@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #282c34; 
+  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -11,67 +11,60 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-
 }
 
 .list-container {
-  max-height: 300px; /* Adjust based on your needs */
-  overflow-y: auto; /* Enables vertical scrolling */
-  width: 100%; /* Adjust width as necessary */
-  margin: 20px 0; 
-  border-radius: 5px; 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+  max-height: 300px;
+  overflow-y: auto;
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 input[type="text"] {
-  padding: 12px 20px; 
-  margin: 8px 0; 
+  padding: 12px 20px;
+  margin: 8px 0;
   border: 1px solid #ddd;
-  border-radius: 20px; 
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-  font-size: 16px; 
-  transition: all 0.3s ease-in-out; 
+  border-radius: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  transition: all 0.3s ease-in-out;
 }
 
 input[type="text"]:focus {
-  outline: none; 
-  border-color: #4a90e2; 
+  outline: none;
+  border-color: #4a90e2;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-
-
 
 .App-link {
   color: #61dafb;
 }
 
-
 ul {
-  list-style-type: none; 
-  padding: 0; 
+  list-style-type: none;
+  padding: 0;
 }
 
 li {
-  margin: 0.5rem 0; 
+  margin: 0.5rem 0;
 }
 
-
 button {
-  background-color: #61dafb; 
+  background-color: #61dafb;
   color: #fff;
-  border: none; 
-  padding: 10px 20px; 
-  margin: 5px; 
-  border-radius: 5px; 
-  cursor: pointer; 
-  transition: background-color 0.3s; 
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 button:hover {
-  background-color: #4a90e2; 
+  background-color: #4a90e2;
 }
-
-
 
 @keyframes App-logo-spin {
   from {
@@ -83,7 +76,28 @@ button:hover {
 }
 
 .buttons-container {
-  display: flex; 
-  justify-content: center; 
-  gap: 10px; 
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+nav {
+  background-color: #333;
+  padding: 1rem;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  margin: 0 1rem;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s;
+}
+
+nav a:hover {
+  background-color: #555;
+}
+
+nav a.active {
+  border-bottom: 2px solid #61dafb;
 }
