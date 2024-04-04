@@ -1,0 +1,13 @@
+.sau-container {
+    background-color: #f3f3f3;
+    padding: 80px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    width: 300px; /* Adjust width as needed */
+    background-color: white;
+  }
+  
+  .sau-detail {
+    margin: 10px 0;
+  }
