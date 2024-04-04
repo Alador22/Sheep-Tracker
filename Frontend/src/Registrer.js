@@ -6,7 +6,9 @@ function Register() {
   const [formData, setFormData] = useState({
     name: '',
     birthdate: '',
-    idNumber: '',
+    merkeNr: '',
+    klaveNr: '',
+    dead: '',
     father: '',
     mother: ''
   });
@@ -51,9 +53,23 @@ function Register() {
         />
         <input
           type="text"
-          name="merkenummer"
+          name="merkeNr"
           placeholder="Merkenummer"
-          value={formData.idNumber}
+          value={formData.merkeNr}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="klaveNr"
+          placeholder="klaveNr"
+          value={formData.klaveNr}
+          onChange={handleChange}
+        />
+        <input
+          type="date"
+          name="dead"
+          placeholder="dead"
+          value={formData.dead}
           onChange={handleChange}
         />
         <input
@@ -70,7 +86,7 @@ function Register() {
           value={formData.mother}
           onChange={handleChange}
         />
-        <button type="submit">Submit</button>
+        <button type="submit">Registrer</button>
       </form>
     </div>
   );
