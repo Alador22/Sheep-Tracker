@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Login from './Login';
+import LeggTil from './LeggTil';
+import Sau from './Sau';
+import Registrer from './Registrer';
 
 function App() {
   const items = ['Marie', 'Ingrid', 'Rolf', 'Kevin', 'Leif', 'Jenny', 'Ali'];
@@ -17,11 +20,16 @@ function App() {
         {}
         <nav>
           <Link to="/">Home</Link> | <Link to="/login">Login</Link>
+          | <Link to="/LeggTil">LeggTil</Link> | <Link to="/Sau">Sau</Link>
+          | <Link to="/Registrer">Registrer</Link>
         </nav>
 
-        {}
+        {/* Define your routes */}
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/LeggTil" element={<LeggTil />} />
+          <Route path="/Sau" element={<Sau />} />
+          <Route path="/Registrer" element={<Registrer />} />
           <Route
             path="/"
             element={
@@ -54,3 +62,5 @@ function App() {
 }
 
 export default App;
+
+// test1@test.com  123456
