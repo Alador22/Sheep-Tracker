@@ -11,9 +11,11 @@ module.exports = (req, res, next) => {
     if (!token) {
       throw new Error("Autentisering mislyktes!");
     }
-    const decodedToken = jwt.verify(token, "shaun_the_sheep");
+    const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
     req.userData = {
       userId: decodedToken.userId,
+      firstName: decodedToken.firstName,
+      lastName: decodedToken.lastName,
       email: decodedToken.email,
     };
     next();

@@ -3,6 +3,7 @@
     "DB_USER": "alador",
     "DB_PASSWORD": "9fElxTe3xTMdvSL7",
     "DB_NAME": "sheeptracker",
-    "PORT": "5000"
+    "PORT": "5000",
+    "TOKEN_KEY": "shaun_the_sheep"
   }
 }

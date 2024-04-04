@@ -72,7 +72,7 @@ const signUp = async (req, res, next) => {
         lastName: newUser.lastName,
         email: newUser.email,
       },
-      "shaun_the_sheep",
+      process.env.TOKEN_KEY,
       {
         expiresIn: "5h",
       }
@@ -120,7 +120,7 @@ const logIn = async (req, res, next) => {
         lastName: checkExistingUser.lastName,
         email: checkExistingUser.email,
       },
-      "shaun_the_sheep",
+      process.env.TOKEN_KEY,
       {
         expiresIn: "5h",
       }
