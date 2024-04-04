@@ -17,7 +17,7 @@ function LeggTil() {
     }
 
     try {
-      const response = await axios.post('http://localhost:5000/user/LegggTil', {
+      const response = await axios.post('http://localhost:5000/user/signup', {
         firstName,
         lastName,
         email,
