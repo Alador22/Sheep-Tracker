@@ -11,6 +11,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  
 }
 
 .list-container {
@@ -54,6 +55,7 @@ li {
 li:hover {
 
   text-decoration: underline;
+  cursor: pointer;
   
 }
 
