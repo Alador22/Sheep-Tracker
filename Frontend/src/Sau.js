@@ -4,6 +4,8 @@ function Sau() {
 
     return(
 
+      <div className="page">
+
         <div className="sau-container">
       <h1>Sau Info</h1>
       <div className="sau-detail">
@@ -21,6 +23,7 @@ function Sau() {
       <div className="sau-detail">
         <strong>Mother:</strong> 
       </div>
+    </div>
     </div>
 
     )

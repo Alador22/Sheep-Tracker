@@ -7,7 +7,15 @@ import Sau from './Sau';
 import Registrer from './Registrer';
 
 function App() {
-  const items = ['Marie', 'Ingrid', 'Rolf', 'Kevin', 'Leif', 'Jenny', 'Ali'];
+  const items = [
+    'shaun', 'Ingrid', 'Rolf', 'Kevin', 'Leif', 'Jenny', 'Ali', 'Olivia', 'Noah', 
+    'Emma', 'Liam', 'Sophia', 'Mason', 'Isabella', 'Jacob', 'Mia', 'William', 
+    'Charlotte', 'Ethan', 'Amelia', 'James', 'Harper', 'Alexander', 'Evelyn', 
+    'Michael', 'Abigail', 'Benjamin', 'Emily', 'Elijah', 'Madison', 'Daniel', 
+    'Avery', 'Aiden', 'Ella', 'Logan', 'Scarlett', 'Matthew', 'Grace', 'Lucas', 
+    'Chloe', 'Jackson', 'Lily', 'David', 'Aria', 'Oliver', 'Isabelle', 'Jayden', 
+    'Sophie', 'Joseph', 'Layla'
+  ];
   const [searchTerm, setSearchTerm] = useState('');
   
   const filteredItems = items.filter(item =>
@@ -19,12 +27,12 @@ function App() {
       <div className="App">
         {}
         <nav>
-          <Link to="/">Home</Link> | <Link to="/login">Login</Link>
+          <Link to="/">Forside</Link> | <Link to="/login">Login</Link>
           | <Link to="/LeggTil">LeggTil</Link> | <Link to="/Sau">Sau</Link>
           | <Link to="/Registrer">Registrer</Link>
         </nav>
 
-        {/* Define your routes */}
+        {}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/LeggTil" element={<LeggTil />} />
@@ -46,10 +54,6 @@ function App() {
                         <li key={index}>{item}</li>
                       ))}
                     </ul>
-                  </div>
-                  <div className="buttons-container">
-                    <button className="leggTilButton">Legg til sau</button>
-                    <button>Fjern sau</button>
                   </div>
                 </header>
               </div>

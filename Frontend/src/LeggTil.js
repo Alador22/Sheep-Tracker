@@ -33,6 +33,7 @@ function LeggTil() {
   };
 
   return (
+    <div className="bod">
     <div className="Main">
       <form className="Login" onSubmit={handleSubmit}>
         <input type="text" placeholder="Fornavn" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
@@ -42,6 +43,7 @@ function LeggTil() {
         <input type="password" placeholder="Gjenta Passord" value={repeatPassword} onChange={(e) => setRepeatPassword(e.target.value)} />
         <button type="submit">Registrer bruker</button>
       </form>
+    </div>
     </div>
   );
 }
