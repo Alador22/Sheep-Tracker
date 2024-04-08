@@ -38,6 +38,8 @@ function App() {
           <Route path="/LeggTil" element={<LeggTil />} />
           <Route path="/Sau" element={<Sau />} />
           <Route path="/Registrer" element={<Registrer />} />
+          <Route path="/App" element={<App />} />
+          
           <Route
             path="/"
             element={

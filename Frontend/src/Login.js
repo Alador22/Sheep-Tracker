@@ -1,9 +1,14 @@
 import './login.css';
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+
 
 function Login() {
+  const navigate = useNavigate();
+  const redirectToLeggTil = () => {
+    navigate('/LeggTil');
+  }
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -21,8 +26,7 @@ function Login() {
       });
 
       console.log('Login successful:', response.data);
-      
-      <Link to={"/App"}></Link>
+      navigate('/')
       
     } catch (error) {
       console.error('Login failed:', error.response ? error.response.data.message : error.message);
@@ -49,7 +53,7 @@ function Login() {
         />
         <button onClick={handleLogin}>Logg inn</button>
         {}
-        <button>Lag bruker</button>
+        <button onClick={redirectToLeggTil}>Lag bruker</button>
       </div>
     </div>
   );
