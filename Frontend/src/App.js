@@ -37,13 +37,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/LeggTil" element={<LeggTil />} />
           <Route path="/Sau" element={<Sau />} />
-          <Route path="/Registrer" element={<Registrer />} />
-          <Route path="/App" element={<App />} />
-          
+          <Route path="/Registrer" element={<Registrer />} />          
           <Route
             path="/"
             element={
-              <div>
+              <div className='maindiv'>
                 <header className="App-header">
                   <input
                     type="text"

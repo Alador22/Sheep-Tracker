@@ -18,7 +18,7 @@ function LeggTil() {
   const handleSubmit = async (e) => {
     e.preventDefault(); 
     if (password !== repeatPassword) {
-      alert('Passordene matcher ikke. Prøv igjen.');
+      alert('Passordene matcher ikke.');
       return;
     }
 
