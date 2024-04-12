@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/static/css/main.d8025211.css",
+    "main.js": "/static/js/main.dec874dd.js",
+    "static/js/453.38905db9.chunk.js": "/static/js/453.38905db9.chunk.js",
+    "static/media/saueBilde.webp": "/static/media/saueBilde.9c8d1a74856a7332a86f.webp",
+    "index.html": "/index.html",
+    "main.d8025211.css.map": "/static/css/main.d8025211.css.map",
+    "main.dec874dd.js.map": "/static/js/main.dec874dd.js.map",
+    "453.38905db9.chunk.js.map": "/static/js/453.38905db9.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.d8025211.css",
+    "static/js/main.dec874dd.js"
+  ]
+}

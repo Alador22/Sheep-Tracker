@@ -7,10 +7,12 @@ const userRoutes = require("./routes/user-routes");
 const HttpError = require("./models/http-error");
 
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.static(path.join("public")));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -24,6 +26,10 @@ app.use((req, res, next) => {
 app.use("/sheeps", sheepsRoutes);
 
 app.use("/user", userRoutes);
+
+app.use((req, res, next) => {
+  res.sendFile(path.resolve(__dirname, "public", "index.html"));
+});
 
 app.use((req, res, next) => {
   const error = new HttpError("Could not find this route.", 404);
