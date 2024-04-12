@@ -1,35 +1,45 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import './Registrer.css'; 
+import React, { useState } from "react";
+import axios from "axios";
+import "./Registrer.css";
 
 function Register() {
   const [formData, setFormData] = useState({
-    name: '',
-    birthdate: '',
-    merkeNr: '',
-    klaveNr: '',
-    dead: '',
-    father: '',
-    mother: ''
+    name: "",
+    birthdate: "",
+    merkeNr: "",
+    klaveNr: "",
+    dead: "",
+    father: "",
+    mother: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const token = localStorage.getItem("token");
     try {
-      const response = await axios.post('http://localhost:5000/sheeps/save', formData);
+      const response = await axios.post(
+        "http://localhost:5000/sheeps/save",
+        formData,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
       console.log(response.data);
-      alert('Sheep registered successfully!');
+      alert("Sheep registered successfully!");
     } catch (error) {
-      console.error('Failed to register sheep:', error);
-      alert('Failed to register sheep.');
+      console.error("Failed to register sheep:", error);
+      alert("Failed to register sheep.");
     }
   };
 
