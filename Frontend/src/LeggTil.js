@@ -10,9 +10,6 @@ function LeggTil() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const navigate = useNavigate();
-  const redirectToLogin = () => {
-    navigate("/Login");
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,16 +19,19 @@ function LeggTil() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/user/signup", {
-        firstName,
-        lastName,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        process.env.REACT_APP_BACKEND_URL + "/user/signup",
+        {
+          firstName,
+          lastName,
+          email,
+          password,
+        }
+      );
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
-      // Send bruker til logginn eller forsiden.
       alert("Bruker registrert!");
+      navigate("/Login");
     } catch (error) {
       console.error(
         "Error creating account:",
@@ -75,9 +75,7 @@ function LeggTil() {
             value={repeatPassword}
             onChange={(e) => setRepeatPassword(e.target.value)}
           />
-          <button type="submit" onClick={redirectToLogin}>
-            Registrer bruker
-          </button>
+          <button type="submit">Registrer bruker</button>
         </form>
       </div>
     </div>

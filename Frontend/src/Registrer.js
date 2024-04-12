@@ -26,7 +26,7 @@ function Register() {
     const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
-        "http://localhost:5000/sheeps/save",
+        process.env.REACT_APP_BACKEND_URL + "/sheeps/save",
         formData,
         {
           headers: {

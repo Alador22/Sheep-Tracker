@@ -19,10 +19,13 @@ function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost:5000/user/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        process.env.REACT_APP_BACKEND_URL + "/user/login",
+        {
+          email,
+          password,
+        }
+      );
 
       console.log("Login successful:", response.data);
       localStorage.setItem("token", response.data.token);
