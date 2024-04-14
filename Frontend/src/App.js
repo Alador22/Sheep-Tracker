@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Login from './Login';
@@ -7,37 +8,66 @@ import Sau from './Sau';
 import Registrer from './Registrer';
 
 function App() {
-  const items = [
-    'shaun', 'Ingrid', 'Rolf', 'Kevin', 'Leif', 'Jenny', 'Ali', 'Olivia', 'Noah', 
-    'Emma', 'Liam', 'Sophia', 'Mason', 'Isabella', 'Jacob', 'Mia', 'William', 
-    'Charlotte', 'Ethan', 'Amelia', 'James', 'Harper', 'Alexander', 'Evelyn', 
-    'Michael', 'Abigail', 'Benjamin', 'Emily', 'Elijah', 'Madison', 'Daniel', 
-    'Avery', 'Aiden', 'Ella', 'Logan', 'Scarlett', 'Matthew', 'Grace', 'Lucas', 
-    'Chloe', 'Jackson', 'Lily', 'David', 'Aria', 'Oliver', 'Isabelle', 'Jayden', 
-    'Sophie', 'Joseph', 'Layla'
-  ];
+  const [names, setNames] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   
-  const filteredItems = items.filter(item =>
-    item.toLowerCase().includes(searchTerm.toLowerCase())
+  useEffect(() => {
+    const fetchSheepNames = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        if (!token) {
+          console.error('No token found, redirecting to login');
+          // If using a navigate function, it should be called here, e.g.:
+          // navigate('/login');
+          return;
+        }
+
+        const response = await axios.get(process.env.REACT_APP_BACKEND_URL + '/sheeps', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        // Check if the response has the 'sheeps' property which is an array
+        if (response.data && Array.isArray(response.data.sheeps)) {
+          setNames(response.data.sheeps.map(sheep => sheep.name));
+        } else {
+          throw new Error('Data received is not an array');
+        }
+      } catch (error) {
+        console.error('Error fetching sheep names:', error);
+        setError('Failed to fetch sheep names: ' + (error.response?.data?.message || error.message));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSheepNames();
+  }, []);
+
+  const filteredItems = names.filter(name =>
+    name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <Router>
       <div className="App">
-        {}
         <nav>
           <Link to="/">Forside</Link> | <Link to="/login">Login</Link>
           | <Link to="/LeggTil">LeggTil</Link> | <Link to="/Sau">Sau</Link>
           | <Link to="/Registrer">Registrer</Link>
         </nav>
 
-        {}
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/LeggTil" element={<LeggTil />} />
           <Route path="/Sau" element={<Sau />} />
-          <Route path="/Registrer" element={<Registrer />} />          
+          <Route path="/Registrer" element={<Registrer />} />
           <Route
             path="/"
             element={
@@ -66,5 +96,3 @@ function App() {
 }
 
 export default App;
-
-// test1@test.com  123456
