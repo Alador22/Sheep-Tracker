@@ -6,6 +6,7 @@ import Login from './Login';
 import LeggTil from './LeggTil';
 import Sau from './Sau';
 import Registrer from './Registrer';
+import Profile from './Profile';
 
 function App() {
   const [names, setNames] = useState([]);
@@ -17,28 +18,26 @@ function App() {
     const fetchSheepNames = async () => {
       try {
         const token = localStorage.getItem('token');
-        if (!token) {
+        /*if (!token) {
           console.error('No token found, redirecting to login');
-          // If using a navigate function, it should be called here, e.g.:
-          // navigate('/login');
-          return;
+          
+          //return;
         }
-
+      */
         const response = await axios.get(process.env.REACT_APP_BACKEND_URL + '/sheeps', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
 
-        // Check if the response has the 'sheeps' property which is an array
         if (response.data && Array.isArray(response.data.sheeps)) {
           setNames(response.data.sheeps.map(sheep => sheep.name));
         } else {
           throw new Error('Data received is not an array');
         }
       } catch (error) {
-        console.error('Error fetching sheep names:', error);
-        setError('Failed to fetch sheep names: ' + (error.response?.data?.message || error.message));
+        //console.error('Error fetching sheep names:', error);
+        //setError('Failed to fetch sheep names: ' + (error.response?.data?.message || error.message));
       } finally {
         setLoading(false);
       }
@@ -60,7 +59,7 @@ function App() {
         <nav>
           <Link to="/">Forside</Link> | <Link to="/login">Login</Link>
           | <Link to="/LeggTil">LeggTil</Link> | <Link to="/Sau">Sau</Link>
-          | <Link to="/Registrer">Registrer</Link>
+          | <Link to="/Registrer">Registrer</Link> <Link to="/Profile"></Link>
         </nav>
 
         <Routes>
@@ -68,6 +67,7 @@ function App() {
           <Route path="/LeggTil" element={<LeggTil />} />
           <Route path="/Sau" element={<Sau />} />
           <Route path="/Registrer" element={<Registrer />} />
+          <Route path="/Profile" element={<Profile />} />
           <Route
             path="/"
             element={
