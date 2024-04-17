@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Registrer.css";
 
-function Register() {
+function Register({ handleRefresh }) {
   const [formData, setFormData] = useState({
     name: "",
     birthdate: "",
@@ -37,6 +37,7 @@ function Register() {
       );
       console.log(response.data);
       alert("Sheep registered successfully!");
+      handleRefresh();
     } catch (error) {
       console.error("Failed to register sheep:", error);
       alert("Failed to register sheep.");
