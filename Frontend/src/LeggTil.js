@@ -34,7 +34,7 @@ function LeggTil() {
       navigate("/Login");
     } catch (error) {
       console.error(
-        "Error creating account:",
+        "Kunne ikke lage konto:",
         error.response ? error.response.data : error
       );
       alert("Feil ved opprettelse av brukerkonto.");
