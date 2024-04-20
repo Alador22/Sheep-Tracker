@@ -20,17 +20,6 @@ function Profile() {
     }
   }, []);
 
-  console.log(firstName, lastName, email);
-
-  const handleEmailChange = (e) => {
-    e.preventDefault();
-    // Call to backend to update email
-    axios
-      .post("http://localhost:5000/user/profile", { email, currentPassword })
-      .then((response) => alert("Email updated successfully!"))
-      .catch((error) => alert("Failed to update email!"));
-  };
-
   const handlePasswordChange = (e) => {
     e.preventDefault();
     // Call to backend to update password
@@ -64,17 +53,6 @@ function Profile() {
   return (
     <div className="Profile">
       <h1>Profile Settings</h1>
-      <form onSubmit={handleEmailChange}>
-        <label>
-          New Email:
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <button type="submit">Change Email</button>
-      </form>
       <form onSubmit={handlePasswordChange}>
         <label>
           New Password:
@@ -94,10 +72,7 @@ function Profile() {
         </label>
         <button type="submit">Change Password</button>
       </form>
-      <button
-        onClick={handleAccountDeletion}
-        style={{ marginTop: "20px", color: "red" }}
-      >
+      <button onClick={handleAccountDeletion} style={{ marginTop: "20px" }}>
         Delete Account
       </button>
     </div>

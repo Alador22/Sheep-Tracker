@@ -31,7 +31,7 @@ const getSheepById = async (req, res, next) => {
       { owner_id: ownerId },
     ]);
   } catch (err) {
-    const error = new HttpError("Noe gikk galt, prøve igjen senere.", 500);
+    const error = new HttpError("Noe gikk galt, prøve igjen senere", 500);
     return next(error);
   }
   if (!sheep) {

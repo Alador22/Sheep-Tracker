@@ -1,23 +1,84 @@
 .page {
-
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 50vh;
   background-color: cadetblue;
+  padding: 20px;
 }
 
-
 .sau-container {
-  background-color: cadetblue;
-  padding: 80px;
+  background-color: white;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 300px; 
-  background-color: white;
-  }
-  
-  .sau-detail {
-    margin: 10px 0;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.sau-detail {
+  margin: 10px 0;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+}
+
+.sau-detail strong {
+  color: #333;
+  margin-right: 5px;
+  min-width: 90px;
+  margin-left: 30%;
+}
+
+.sau-detail input[type="text"],
+.sau-detail input[type="date"] {
+  max-width: 30%;
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sau-detail input[type="text"]:focus,
+.sau-detail input[type="date"]:focus {
+  border-color: #4a90e2;
+  outline: none;
+}
+
+button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+@media (min-width: 768px) {
+  .sau-container {
+    padding: 40px;
+    width: 80%;
   }
 
+  .sau-detail input[type="text"],
+  .sau-detail input[type="date"] {
+    width: 60%; /* Adjust width for larger screens */
+  }
+}
+
+@media (min-width: 992px) {
+  .sau-container {
+    width: 50%;
+  }
+
+  .sau-detail input[type="text"],
+  .sau-detail input[type="date"] {
+    width: 50%; /* Adjust width for larger screens */
+  }
+}

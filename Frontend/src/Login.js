@@ -2,8 +2,10 @@ import "./login.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
-function Login() {
+function Login({ handleRefresh }) {
+  const { login } = useAuth();
   const navigate = useNavigate();
   const redirectToLeggTil = () => {
     navigate("/LeggTil");
@@ -26,9 +28,10 @@ function Login() {
           password,
         }
       );
-
       console.log("Login successful:", response.data);
       localStorage.setItem("token", response.data.token);
+      login(response.data.token);
+      handleRefresh();
       navigate("/");
     } catch (error) {
       console.error(

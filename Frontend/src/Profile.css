@@ -1,60 +1,61 @@
 .Profile {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .Profile h1 {
-    color: #333;
-  }
-  
-  .Profile form {
-    margin-bottom: 20px;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
-  
-  .Profile label {
-    display: block;
-    margin-bottom: 10px;
-    color: #666;
-  }
-  
-  .Profile input[type="email"], .Profile input[type="password"] {
-    width: calc(100% - 24px);
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    box-sizing: border-box; /* makes sure padding doesn't affect the width */
-  }
-  
-  .Profile button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    background-color: #5c67f2;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .Profile button:hover {
-    background-color: #4a54e1;
-  }
-  
-  .Profile button[type="submit"] {
-    margin-right: 10px;
-  }
-  
-  .Profile button:last-child {
-    margin-top: 20px;
-    background-color: #ff4d4d; /* A distinct color for deletion to stand out */
-  }
-  
-  .Profile button:last-child:hover {
-    background-color: #e84141;
-  }
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.Profile h1 {
+  color: #333;
+}
+
+.Profile form {
+  margin-bottom: 20px;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.Profile label {
+  display: block;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.Profile input[type="email"],
+.Profile input[type="password"] {
+  width: calc(100% - 24px);
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box; /* makes sure padding doesn't affect the width */
+}
+
+.Profile button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #5c67f2;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Profile button:hover {
+  background-color: #4a54e1;
+}
+
+.Profile button[type="submit"] {
+  margin-right: 10px;
+}
+
+.Profile button:last-child {
+  margin-top: 20px;
+  background-color: #ff4d4d; /* A distinct color for deletion to stand out */
+}
+
+.Profile button:last-child:hover {
+  background-color: #e84141;
+}

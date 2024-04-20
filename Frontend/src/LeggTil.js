@@ -3,13 +3,16 @@ import "./LeggTil.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function LeggTil() {
+function LeggTil({ handleRefresh }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const navigate = useNavigate();
+  const redirectToLogin = () => {
+    navigate("/Login");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,6 +34,7 @@ function LeggTil() {
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
       alert("Bruker registrert!");
+      handleRefresh();
       navigate("/Login");
     } catch (error) {
       console.error(
@@ -76,6 +80,7 @@ function LeggTil() {
             onChange={(e) => setRepeatPassword(e.target.value)}
           />
           <button type="submit">Registrer bruker</button>
+          <button onClick={redirectToLogin}>Logg inn</button>
         </form>
       </div>
     </div>
