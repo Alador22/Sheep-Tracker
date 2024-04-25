@@ -20,14 +20,14 @@ const getSheeps = async (req, res, next) => {
   res.json({ sheeps });
 };
 
-const getSheepById = async (req, res, next) => {
-  const sheepId = req.params.sheepId;
+const getSheepByMerkeNr = async (req, res, next) => {
+  const merkeNr = req.params.sheepId;
   const ownerId = req.userData.userId;
 
   let sheep;
   try {
     sheep = await Sheep.findOne().and([
-      { _id: sheepId },
+      { merkeNr: merkeNr },
       { owner_id: ownerId },
     ]);
   } catch (err) {
@@ -125,14 +125,14 @@ const updateInfo = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
-  const sheepId = req.params.sheepId;
+  const merkeNr = req.params.sheepId;
   const ownerId = req.userData.userId;
   const { name, birthdate, klaveNr, dead, father, mother } = req.body;
 
   let sheep;
   try {
     sheep = await Sheep.findOne().and([
-      { _id: sheepId },
+      { merkeNr: merkeNr },
       { owner_id: ownerId },
     ]);
   } catch (err) {
@@ -211,12 +211,12 @@ const removeSheep = async (req, res, next) => {
     return next(new HttpError("Ugyldige inndata, vennligst prøv igjen.", 422));
   }
   const ownerId = req.userData.userId;
-  const sheepId = req.params.sheepId;
+  const merkeNr = req.params.sheepId;
 
   let sheep;
   try {
     sheep = await Sheep.findOne().and([
-      { _id: sheepId },
+      { merkeNr: merkeNr },
       { owner_id: ownerId },
     ]);
   } catch (err) {
@@ -232,19 +232,22 @@ const removeSheep = async (req, res, next) => {
     return next(error);
   }
 
-  const merkeNr = sheep.merkeNr;
+  const merkeNr1 = sheep.merkeNr;
 
   try {
     const session = await mongoose.startSession();
     session.startTransaction();
-    sheep = await Sheep.deleteOne({ _id: sheepId });
+    sheep = await Sheep.deleteOne().and([
+      { merkeNr: merkeNr },
+      { owner_id: ownerId },
+    ]);
     await Sheep.updateMany(
-      { father: merkeNr, owner_id: ownerId },
+      { father: merkeNr1, owner_id: ownerId },
       { $unset: { father: "" } },
       { session: session }
     );
     await Sheep.updateMany(
-      { mother: merkeNr, owner_id: ownerId },
+      { mother: merkeNr1, owner_id: ownerId },
       { $unset: { mother: "" } },
       { session: session }
     );
@@ -257,7 +260,7 @@ const removeSheep = async (req, res, next) => {
 };
 
 exports.getSheeps = getSheeps;
-exports.getSheepById = getSheepById;
+exports.getSheepByMerkeNr = getSheepByMerkeNr;
 exports.addSheep = addSheep;
 exports.updateInfo = updateInfo;
 exports.removeSheep = removeSheep;

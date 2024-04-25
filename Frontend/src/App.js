@@ -6,14 +6,14 @@ import {
   Route,
   useNavigate,
 } from "react-router-dom";
-import "./App.css";
-import Login from "./Login";
-import LeggTil from "./LeggTil";
-import Sau from "./Sau";
-import Registrer from "./Registrer";
-import Profile from "./Profile";
-import Navbar from "./Navbar";
-import { AuthProvider } from "./AuthContext";
+import "./containers/home/App.css";
+import Login from "./containers/Login/Login";
+import LeggTil from "./containers/signup/LeggTil";
+import Sau from "./containers/sau/Sau";
+import Registrer from "./containers/leggSau/Registrer";
+import Profile from "./containers/profil/Profile";
+import Navbar from "./Component/navbar/Navbar";
+import { AuthProvider } from "./Context/AuthContext";
 
 function App() {
   const [sheeps, setSheeps] = useState([]);
@@ -67,7 +67,7 @@ function App() {
   };
 
   if (loading) return <div>Loading...</div>;
-  //if (error) return <div>Error: {error}</div>;
+  // if (error) return <div>Error: {error}</div>;
   /*   if (!sheeps || sheeps.length === 0) {
     return <div>No sheep data found</div>;
   }*/
@@ -148,12 +148,12 @@ function HomePage({ sheeps, searchTerm, setSearchTerm }) {
           <thead>
             <tr>
               <th>Navn</th>
-              <th>MerkeNr</th>
+              <th>Merke Nr</th>
             </tr>
           </thead>
           <tbody>
             {sheeps.map((sheep, index) => (
-              <tr key={index} onClick={() => navigate(`/Sau/${sheep._id}`)}>
+              <tr key={index} onClick={() => navigate(`/Sau/${sheep.merkeNr}`)}>
                 <td>{sheep.name}</td>
                 <td>{sheep.merkeNr}</td>
               </tr>

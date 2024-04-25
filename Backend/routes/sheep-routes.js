@@ -10,7 +10,7 @@ router.use(checkToken);
 
 router.get("/", sheepControllers.getSheeps);
 
-router.get("/:sheepId", sheepControllers.getSheepById);
+router.get("/:sheepId", sheepControllers.getSheepByMerkeNr);
 
 router.post(
   "/save",
