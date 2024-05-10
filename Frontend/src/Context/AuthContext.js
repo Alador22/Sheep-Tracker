@@ -1,3 +1,9 @@
+//Alador
+/**
+ * dette er logikken som håndterer pålogget og utlogget tilstand på nettstedet.
+ * sender en bruker til påloggingssiden hvis enten økten er ferdig og/eller det finnes ikke et token i local storage
+ * det gjør også det motsatte, så hvis det er et token, blir brukeren automatisk logget på og sendt til hjemmesiden
+ */
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 const AuthContext = createContext();
@@ -8,7 +14,7 @@ export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // This function checks the token in local storage to update login status
+    // Denne funksjonen sjekker tokenet i local storage for å oppdatere påloggingsstatus
     const checkAuthStatus = () => {
       const token = localStorage.getItem("token");
       setIsLoggedIn(!!token);
