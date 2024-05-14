@@ -34,6 +34,9 @@ const Navbar = () => {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+  const handleProfileNavigation = () => {
+    navigate("/profile");
+  };
 
   const handleLogout = () => {
     logout();
@@ -87,7 +90,7 @@ const Navbar = () => {
                 <AddBoxIcon />
               </ListItemIcon>
               <ListItemText
-                primary="Legg Sau"
+                primary="Legg Til Sau"
                 sx={{ "& .MuiListItemText-primary": { color: "white" } }}
               />
             </ListItem>
@@ -163,7 +166,12 @@ const Navbar = () => {
         {isMobile && isLoggedIn && (
           <Avatar
             {...stringAvatar(`${firstName} ${lastName}`)}
-            sx={{ marginRight: 0, bgcolor: "primary.main" }}
+            sx={{
+              marginRight: 0,
+              bgcolor: "primary.main",
+              cursor: "pointer",
+            }}
+            onClick={handleProfileNavigation}
           />
         )}
 
@@ -191,7 +199,7 @@ const Navbar = () => {
               startIcon={<AddBoxIcon />}
               sx={{ margin: "0.5rem", fontSize: "1.1rem" }}
             >
-              Legg Sau
+              Legg Til Sau
             </Button>
             <Button
               color="inherit"
